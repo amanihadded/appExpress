@@ -4,13 +4,30 @@ const app = express();
 const port = 3002;
 app.use(express.urlencoded({ extended: true }));
 const Article = require("./models/myDataShema")
+app.set('view engine', 'ejs')
+
+// Route pour la page d'accueil
+app.get('/', (req, res) => {
+    Article.find()
+        .then((data) => {
+            res.render("home", { mytitle: "home page", arr: data});
+            console.log(data);
+            
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).send("Internal Server Error");
+        });
+        
+});
+
 
 app.get('/hello', (req, res) => {
     res.send('hello amani!');
 });
 
 app.get('/', (req, res) => {
-    res.sendFile("./views/home.html", {root: __dirname})
+    res.render("home", {mytitle: "home page"});
 });
 
 
