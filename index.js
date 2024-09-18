@@ -6,7 +6,7 @@ app.use(express.urlencoded({ extended: true }));
 const Custumer = require("./models/custumerShema")
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
-
+var moment = require('moment');
 
 //auto refresh 
 //npm run watch
@@ -30,7 +30,7 @@ liveReloadServer.server.once("connection", () => {
 app.get('/', (req, res) => {
     Custumer.find()
         .then((data) => {
-            res.render("index", {arr: data});
+            res.render("index", {arr: data, moment : moment});
             console.log(data);
             
         })
@@ -41,16 +41,6 @@ app.get('/', (req, res) => {
         
 });
 
-
-app.get('/user/:id', (req, res) => {
-    Custumer
-    .findById(req.params.id)
-    .then((data)=>{
-        res.render("user/view",{object :data });
-    })
-    .catch((err)=>{
-        console.log(err); })
-}); 
 //get request
 app.get('/user/add.html', (req, res) => {
     res.render("user/add");
@@ -69,6 +59,15 @@ app.get('/', (req, res) => {
     res.render("index", {mytitle: "home page"});
 });
 
+app.get('/user/:id', (req, res) => {
+    Custumer
+    .findById(req.params.id)
+    .then((data)=>{
+        res.render("user/view",{object :data ,moment : moment});
+    })
+    .catch((err)=>{
+        console.log(err); })
+}); 
 
 
 
