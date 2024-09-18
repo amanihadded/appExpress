@@ -26,28 +26,37 @@ liveReloadServer.server.once("connection", () => {
 });
 
 
-// Route pour la page d'accueil
-app.get('/', (req, res) => {
-    Article.find()
-        .then((data) => {
-            res.render("home", { mytitle: "home page", arr: data});
-            console.log(data);
+//  Route pour la page d'accueil
+// app.get('/', (req, res) => {
+//     Article.find()
+//         .then((data) => {
+//             res.render("home", { mytitle: "home page", arr: data});
+//             console.log(data);
             
-        })
-        .catch((err) => {
-            console.log(err);
-            res.status(500).send("Internal Server Error");
-        });
+//         })
+//         .catch((err) => {
+//             console.log(err);
+//             res.status(500).send("Internal Server Error");
+//         });
         
+// });
+
+
+app.get('/user/add.html', (req, res) => {
+    res.render("user/add");
 });
-
-
-app.get('/hello', (req, res) => {
-    res.send('hello amani!');
+app.get('/user/edit.html', (req, res) => {
+    res.render("user/edit");
+});
+app.get('/user/view.html', (req, res) => {
+    res.render("user/view");
+});
+app.get('/user/search.html', (req, res) => {
+    res.render("user/search");
 });
 
 app.get('/', (req, res) => {
-    res.render("home", {mytitle: "home page"});
+    res.render("index", {mytitle: "home page"});
 });
 
 
