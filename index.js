@@ -26,20 +26,20 @@ liveReloadServer.server.once("connection", () => {
 });
 
 
-//  Route pour la page d'accueil
-// app.get('/', (req, res) => {
-//     Article.find()
-//         .then((data) => {
-//             res.render("home", { mytitle: "home page", arr: data});
-//             console.log(data);
+ //Route pour la page d'accueil
+app.get('/', (req, res) => {
+    Custumer.find()
+        .then((data) => {
+            res.render("index", {arr: data});
+            console.log(data);
             
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//             res.status(500).send("Internal Server Error");
-//         });
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).send("Internal Server Error");
+        });
         
-// });
+});
 
 //get request
 app.get('/user/add.html', (req, res) => {
@@ -69,7 +69,7 @@ app.post('/user/add.html', (req,res)=> {
     custumer
     .save().
     then(()=>{
-        res.redirect("/user/add.html");
+        res.redirect("/");
     })
     .catch((err)=>{
         console.log(err);
