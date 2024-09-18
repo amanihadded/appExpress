@@ -41,6 +41,16 @@ app.get('/', (req, res) => {
         
 });
 
+
+app.get('/user/:id', (req, res) => {
+    Custumer
+    .findById(req.params.id)
+    .then((data)=>{
+        res.render("user/view",{object :data });
+    })
+    .catch((err)=>{
+        console.log(err); })
+}); 
 //get request
 app.get('/user/add.html', (req, res) => {
     res.render("user/add");
