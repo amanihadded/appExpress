@@ -2,11 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const port = 3002;
-app.use(express.urlencoded({ extended: true }));
-const Custumer = require("./models/custumerShema")
-app.set('view engine', 'ejs')
+app.use(express.urlencoded({ extended: true }));  //post
+const Custumer = require("./models/custumerShema") //table
+app.set('view engine', 'ejs') 
 app.use(express.static('public'))
 var moment = require('moment');
+var methodOverride = require('method-override') //delete
+app.use(methodOverride('_method')) //delete 
 
 //auto refresh 
 //npm run watch
@@ -30,9 +32,7 @@ liveReloadServer.server.once("connection", () => {
 app.get('/', (req, res) => {
     Custumer.find()
         .then((data) => {
-            res.render("index", {arr: data, moment : moment});
-            console.log(data);
-            
+            res.render("index", {arr: data, moment : moment});            
         })
         .catch((err) => {
             console.log(err);
@@ -45,9 +45,19 @@ app.get('/', (req, res) => {
 app.get('/user/add.html', (req, res) => {
     res.render("user/add");
 });
-app.get('/user/edit.html', (req, res) => {
-    res.render("user/edit");
-});
+app.get('/edit/:id', (req, res) => {
+
+    Custumer
+    .findById(req.params.id)
+    .then((data)=>{
+        res.render("user/edit",{object :data ,moment : moment});
+    })
+    .catch((err)=>{
+        console.log(err); });
+
+}); 
+
+
 app.get('/user/view.html', (req, res) => {
     res.render("user/view");
 });
@@ -59,7 +69,7 @@ app.get('/', (req, res) => {
     res.render("index", {mytitle: "home page"});
 });
 
-app.get('/user/:id', (req, res) => {
+app.get('/view/:id', (req, res) => {
     Custumer
     .findById(req.params.id)
     .then((data)=>{
@@ -85,6 +95,17 @@ app.post('/user/add.html', (req,res)=> {
     })
     
     
+});
+
+//delete
+app.delete('/edit/:id', (req,res) =>{
+    Custumer.findByIdAndDelete(req.params.id)
+    .then((data)=>{
+        res.redirect("/");
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
 });
 
 //connexion avec base 

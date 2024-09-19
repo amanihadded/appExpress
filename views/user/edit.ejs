@@ -20,7 +20,7 @@
 
     <link href="../css/bootstrap.min.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="css/dark-light.css">
+    <link rel="stylesheet" href="../css/dark-light.css">
 
     <!-- Custom styles for this template -->
     <link href="../css/sidebars.css" rel="stylesheet" />
@@ -175,9 +175,9 @@
               >
                 Close
               </button>
-              <button type="button" class="btn btn-danger">
-                Delete
-              </button>
+              <form action="/edit/<%= object._id %>?_method=DELETE" method="post">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
             </div>
           </div>
         </div>
