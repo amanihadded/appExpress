@@ -97,6 +97,20 @@ app.post('/user/add.html', (req,res)=> {
     
 });
 
+//post (serach)
+app.post('/search', (req,res)=>{
+    console.log("-----------------------");
+    const searchText = req.body.searchText.trim();
+    Custumer.find( { $or: [{firstname: searchText}, {lastname: searchText}] })
+    .then((resultat)=>{
+        console.log(resultat);
+        res.render("user/search",{arr :resultat ,moment : moment});
+    })
+    .catch((err)=>{
+        console.log(err);
+    });
+});
+
 //delete
 app.delete('/edit/:id', (req,res) =>{
     Custumer.findByIdAndDelete(req.params.id)
