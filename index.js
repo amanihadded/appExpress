@@ -3,12 +3,11 @@ const mongoose = require('mongoose');
 const app = express();
 const port = 3002;
 app.use(express.urlencoded({ extended: true }));  //post
-const Custumer = require("./models/custumerShema") //table
 app.set('view engine', 'ejs') 
 app.use(express.static('public'))
-var moment = require('moment');
 var methodOverride = require('method-override') //delete
 app.use(methodOverride('_method')) //delete 
+var allRouter = require('./router/allRouter');
 
 //auto refresh 
 //npm run watch
@@ -28,111 +27,6 @@ liveReloadServer.server.once("connection", () => {
 });
 
 
- //Route pour la page d'accueil
-app.get('/', (req, res) => {
-    Custumer.find()
-        .then((data) => {
-            res.render("index", {arr: data, moment : moment});            
-        })
-        .catch((err) => {
-            console.log(err);
-            res.status(500).send("Internal Server Error");
-        });
-        
-});
-
-//get request
-app.get('/user/add.html', (req, res) => {
-    res.render("user/add");
-});
-app.get('/edit/:id', (req, res) => {
-
-    Custumer
-    .findById(req.params.id)
-    .then((data)=>{
-        res.render("user/edit",{object :data ,moment : moment});
-    })
-    .catch((err)=>{
-        console.log(err); });
-
-}); 
-
-
-app.get('/user/view.html', (req, res) => {
-    res.render("user/view");
-});
-app.get('/user/search.html', (req, res) => {
-    res.render("user/search");
-});
-
-app.get('/', (req, res) => {
-    res.render("index", {mytitle: "home page"});
-});
-
-app.get('/view/:id', (req, res) => {
-    Custumer
-    .findById(req.params.id)
-    .then((data)=>{
-        res.render("user/view",{object :data ,moment : moment});
-    })
-    .catch((err)=>{
-        console.log(err); })
-}); 
-
-
-
-//post request
-app.post('/user/add.html', (req,res)=> {
-    const custumer = new Custumer(req.body);
-
-    custumer
-    .save().
-    then(()=>{
-        res.redirect("/");
-    })
-    .catch((err)=>{
-        console.log(err);
-    })
-    
-    
-});
-
-//post (serach)
-app.post('/search', (req,res)=>{
-    console.log("-----------------------");
-    const searchText = req.body.searchText.trim();
-    Custumer.find( { $or: [{firstname: searchText}, {lastname: searchText}] })
-    .then((resultat)=>{
-        console.log(resultat);
-        res.render("user/search",{arr :resultat ,moment : moment});
-    })
-    .catch((err)=>{
-        console.log(err);
-    });
-});
-
-//delete
-app.delete('/edit/:id', (req,res) =>{
-    Custumer.findByIdAndDelete(req.params.id)
-    .then((data)=>{
-        res.redirect("/");
-    })
-    .catch((err)=>{
-        console.log(err);
-    });
-});
-
-//put
-app.put('/edit/:id', (req,res) =>{
-    console.log(req.body);
-    Custumer.updateOne({_id: req.params.id}, req.body)
-    .then(() => {
-      res.redirect("/");
-  }).catch((err)=>{
-    console.log(err);
-});
-});
-
 //connexion avec base 
 mongoose
 .connect("mongodb+srv://haddadamani222:i6MmbtLF9lFP9b67@cluster0.bu82k.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
@@ -141,6 +35,10 @@ mongoose
         console.log(`http://localhost:${port}/`);
     });
 })
-.catch((err)=>{console.log(err)});
+.catch((err)=>{
+    console.log(err)
+});
+
+app.use(allRouter);
 
 
