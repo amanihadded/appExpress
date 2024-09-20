@@ -55,7 +55,7 @@
 
 
 
-        <form class="mx-0 row gx-3 gy-4 mt-2">
+        <form class="mx-0 row gx-3 gy-4 mt-2" action="/edit/<%= object._id %>?_method=PUT" method="post" onsubmit="return validateForm()">
           <div class="col-md-6">
             <label for="inputfirstName4" class="form-label">First Name:</label>
             <input
@@ -63,8 +63,12 @@
               type="text"
               class="form-control"
               id="inputfirstName4"
+              name="firstname"
+              
             />
+            <small class="text-danger" id="firstNameError"></small>
           </div>
+
           <div class="col-md-6">
             <label for="inputlastName4" class="form-label">Last Name:</label>
             <input
@@ -72,7 +76,9 @@
               type="text"
               class="form-control"
               id="inputlastName4"
+              name="lastname"
             />
+            <small class="text-danger" id="lastNameError"></small>
           </div>
 
           <div class="col-md-6">
@@ -82,8 +88,11 @@
               type="email"
               class="form-control"
               id="inputemail4"
+              name="email"
             />
+            <small class="text-danger" id="emailError"></small>
           </div>
+
           <div class="col-md-6">
             <label for="inputtele4" class="form-label">Telephone:</label>
             <input
@@ -91,7 +100,9 @@
               type="text"
               class="form-control"
               id="inputtele4"
+              name="phone"
             />
+            <small class="text-danger" id="phoneError"></small>
           </div>
 
           <div>
@@ -102,14 +113,16 @@
                 type="number"
                 class="form-control"
                 id="inputage4"
+                name="age"
               />
+              <small class="text-danger" id="ageError"></small>
             </div>
           </div>
 
           <div>
             <div class="col-md-6">
               <label for="inputCountry" class="form-label">Country:</label>
-              <select id="inputCountry" class="form-select">
+              <select id="inputCountry" class="form-select" name="country">
                 <option hidden disabled>choose here ...</option>
 
                 
@@ -119,17 +132,19 @@
                     <option <%= item === object.country ? "selected" : null %> ><%= item %></option>
                   <% }) %>
               </select>
+              <small class="text-danger" id="countryError"></small>
             </div>
           </div>
 
           <div>
             <div class="col-md-6">
               <label for="inputGender" class="form-label">Gender:</label>
-              <select id="inputGender" class="form-select" >
+              <select id="inputGender" class="form-select" name="gender">
                 <option selected hidden disabled><%= object.gender %></option>
                 <option <%= "Male" === object.gender ? "selected" : null %>>Male</option>
                 <option <%= "Female" === object.gender ? "selected" : null %>>Female</option>
               </select>
+              <small class="text-danger" id="genderError"></small>
             </div>
           </div>
 
@@ -188,7 +203,7 @@
       </div>
     </main>
     <script src="../js/bootstrap.bundle.min.js"></script>
-
+    <script src="../js/controleSaisieAdd.js"></script>
     <script src="../js/sidebars.js"></script>
     <script src="../js/main.js"></script>
   </body>

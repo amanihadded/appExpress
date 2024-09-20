@@ -105,7 +105,18 @@ app.delete('/edit/:id', (req,res) =>{
     })
     .catch((err)=>{
         console.log(err);
-    })
+    });
+});
+
+//put
+app.put('/edit/:id', (req,res) =>{
+    console.log(req.body);
+    Custumer.updateOne({_id: req.params.id}, req.body)
+    .then(() => {
+      res.redirect("/");
+  }).catch((err)=>{
+    console.log(err);
+});
 });
 
 //connexion avec base 
