@@ -55,3 +55,22 @@ html {
 .scrollarea {
   overflow-y: auto;
 }
+.text-bg-blue {
+  background-color: #f859cb; /* ou toute autre couleur bleue que vous préférez */
+  color: white; /* Pour un meilleur contraste */
+}
+.sidebar .nav-link {
+  background-color: transparent;
+  color: white; /* Pour un meilleur contraste */
+  margin: 2px;
+}
+
+.sidebar .nav-link:hover {
+  background-color: rgb(139, 136, 136); /* Couleur lors du survol */
+  color: white;
+}
+
+.sidebar .nav-link.active {
+  background-color:  rgb(139, 136, 136); /* Couleur active pour la page courante */
+}
+
