@@ -1,13 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-const port = 3002;
+const port = process.env.PORT || 3002;
 app.use(express.urlencoded({ extended: true }));  //post
 app.set('view engine', 'ejs') 
 app.use(express.static('public'))
 var methodOverride = require('method-override') //delete
 app.use(methodOverride('_method')) //delete 
 var allRouter = require('./router/allRouter');
+var upload = require('./router/upload');
+var dashbord = require('./router/dashbord');
+app.use(express.static('images'));
+
 
 //auto refresh 
 //npm run watch
@@ -38,7 +42,7 @@ mongoose
 .catch((err)=>{
     console.log(err)
 });
-
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(allRouter);
-
-
+app.use(upload);
+app.use(dashbord);

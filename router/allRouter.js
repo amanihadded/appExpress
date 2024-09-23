@@ -18,9 +18,6 @@ router.get('/user/view.html',userController.view);
 
 router.get('/user/search.html',userController.serach);
 
-router.get('/', (req, res) => {
-    res.render("index", {mytitle: "home page"});
-});
 
 router.get('/view/:id', userController.viewById); 
 

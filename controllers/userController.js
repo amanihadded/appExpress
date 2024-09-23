@@ -5,7 +5,7 @@ var moment = require('moment');
 const home = (req, res) => {
     Custumer.find()
         .then((data) => {
-            res.render("index", {arr: data, moment : moment});            
+            res.render("index", {arr: data, moment : moment});
         })
         .catch((err) => {
             console.log(err);
@@ -79,7 +79,7 @@ const postSearch = (req,res)=>{
 const deleteEditId =  (req,res) =>{
     Custumer.findByIdAndDelete(req.params.id)
     .then((data)=>{
-        res.redirect("/");
+        c
     })
     .catch((err)=>{
         console.log(err);

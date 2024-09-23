@@ -15,7 +15,7 @@
       content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
     />
     <meta name="generator" content="Hugo 0.112.5" />
-    <title>Home page</title>
+    <title>product page</title>
 
     <link href="./css/bootstrap.min.css" rel="stylesheet" />
 
@@ -29,17 +29,16 @@
     <%- include('./components/dark-light.ejs') %>
  
     <main class="d-flex flex-nowrap">
-      <%- include('./components/sidebar.ejs', { currentPage : "index" }) %>
+      <%- include('./components/sidebar.ejs', { currentPage : "product" }) %>
 
       <div class="b-example-divider b-example-vr"></div>
 
       <section class="w-100">
         <%- include('./components/navbar.ejs') %>
         <br><br>
-        <a href="/user/add.html" class="btn btn-primary" style="margin-left: 20px;">Add Customer</a>
-
+        <a href="/product/add.html" class="btn btn-primary" style="margin-left: 20px;">Add Product</a>
         <% if (arr.length === 0) { %>
-          <p class="text-center mt-5">Aucun client pour le moment.</p>
+          <p class="text-center mt-5">Aucun product pour le moment.</p>
         <% } else { %>
           <table
             style="width: 99%"
@@ -48,10 +47,9 @@
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Nom complet</th>
-                <th scope="col">Genre</th>
-                <th scope="col">Pays</th>
-                <th scope="col">Âge</th>
+                <th scope="col">Nom </th>
+                <th scope="col">Decription</th>
+                <th scope="col">Price</th>
                 <th scope="col">Dernière mise à jour</th>
                 <th scope="col">Action</th>
               </tr>
@@ -60,10 +58,9 @@
               <% arr.forEach((element, index) => { %>
                 <tr>
                   <th scope="row"><%= index+1 %></th>
-                  <td><%= element.firstname %> <%= element.lastname %></td>
-                  <td><%= element.gender %></td>
-                  <td><%= element.country %></td>
-                  <td><%= element.age %></td>
+                  <td><img src="<%= element.imageUrl %>" alt="<%= element.name %>" style="width: 50px; height: auto;" /> <%= element.name %></td>
+                  <td><%= element.description %></td>
+                  <td><%= element.price %></td>
                   <td><%= moment(element.updatedAt).fromNow(); %></td>
                   <td>
                     <a
@@ -84,7 +81,7 @@
                     >
                       <i class="bi bi-pencil"></i>
                     </a>
-                    <form action="/edit/<%= element._id %>?_method=DELETE" method="post" style="display:inline">
+                    <form action="/deleteProduct/<%= element._id %>?_method=DELETE" method="post" style="display:inline">
                       <button
                       data-bs-toggle="tooltip"
                       data-bs-title="Supprimer l'utilisateur"

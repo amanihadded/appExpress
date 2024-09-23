@@ -18,7 +18,7 @@
         <hr />
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item">
-            <a href="/" class="nav-link text-white <%= currentPage === "index" ? "active":null  %>  " aria-current="page">
+            <a href="/dashboard" class="nav-link text-white <%= currentPage === "dashbord" ? "active":null  %>  " aria-current="page">
               <svg class="bi pe-none me-2" width="16" height="16">
                 <use xlink:href="#home" />
               </svg>
@@ -27,11 +27,18 @@
           </li>
 
           <li>
-            <a href="/user/add.html" class="nav-link text-white <%= currentPage === "add" ? "active":null  %> ">
+            <a href="/" class="nav-link text-white <%= currentPage === "index" ? "active":null  %> ">
               <svg class="bi pe-none me-2" width="16" height="16">
                 <use xlink:href="#people-circle" />
               </svg>
-              <span class="sidebar-text"> Add Customers </span>
+              <span class="sidebar-text"> Customers </span>
+            </a>
+          </li>
+
+          <li>
+            <a href="/products" class="nav-link text-white <%= currentPage === "product" ? "active":null  %> ">
+              <i class="bi bi-cart pe-none me-2"></i> 
+              <span class="sidebar-text"> Products </span>
             </a>
           </li>
         </ul>
