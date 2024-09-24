@@ -32,6 +32,30 @@ router.get('/product/add.html', (req, res) => {
     res.render("product/add");
 });
 
+router.get('/editProduct/:id', (req, res) => {
+    Product.findById(req.params.id)
+        .then((product) => {
+            res.render("product/edit", { obj: product, moment : moment});
+        })
+        .catch((err) => {
+            res.status(500).json({ error: err.message });
+        });
+});
+
+router.get('/product/view/:id', (req, res) => {
+    Product
+    .findById(req.params.id)
+    .then((data)=>{
+        res.render("product/view",{ view :data ,moment : moment});
+    })
+    .catch((err)=>{
+        console.log(err); })
+});
+
+router.get('/product/search', (req, res) => {
+    res.render("product/search");
+});
+
 // Route POST pour l'upload d'image et l'ajout du produit
 router.post("/upload", upload.single("imageUrl"), (req, res) => {
     const { name, description, price } = req.body;
@@ -55,6 +79,21 @@ router.post("/upload", upload.single("imageUrl"), (req, res) => {
         });
 });
 
+router.post('/product/search', (req, res) => {
+    const searchText = req.body.searchText.trim();
+
+    // Utilisation d'une expression régulière pour effectuer une recherche insensible à la casse
+    Product.find({ name: { $regex: searchText, $options: 'i' } })
+        .then((resultat) => {
+            console.log(resultat);
+            res.render("product/search", { arr: resultat, moment: moment });
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+});
+
+
 // Modifier un produit par ID
 router.put("/editProduct/:id", upload.single("imageUrl"), (req, res) => {
     const { name, description, price } = req.body;
@@ -70,7 +109,7 @@ router.put("/editProduct/:id", upload.single("imageUrl"), (req, res) => {
             if (!updatedProduct) {
                 return res.status(404).json({ message: "Produit non trouvé" });
             }
-            res.status(200).json({ message: "Produit modifié avec succès", product: updatedProduct });
+            res.redirect("/products");
         })
         .catch((err) => {
             res.status(500).json({ error: err.message });

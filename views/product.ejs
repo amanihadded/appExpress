@@ -36,7 +36,13 @@
       <section class="w-100">
         <%- include('./components/navbar.ejs') %>
         <br><br>
-        <a href="/product/add.html" class="btn btn-primary" style="margin-left: 20px;">Add Product</a>
+        <div class="d-flex justify-content-between align-items-center" >
+          <!-- Bouton Add Customer -->
+          <a href="/product/add.html" class="btn btn-primary" style="margin-left: 20px;">Add Product</a>
+        
+          <!-- Formulaire de recherche -->
+          <%- include('./components/productSearch.ejs') %>
+        </div>
         <% if (arr.length === 0) { %>
           <p class="text-center mt-5">Aucun product pour le moment.</p>
         <% } else { %>
@@ -68,7 +74,7 @@
                       data-bs-title="Voir détails"
                       data-bs-placement="top"
                       class="btn btn-secondary btn-sm"
-                      href="./view/<%= element._id %>"
+                      href="product/view/<%= element._id %>"
                       ><i class="bi bi-eye"></i
                     ></a>
         
@@ -77,7 +83,7 @@
                       data-bs-title="Modifier l'utilisateur"
                       data-bs-placement="top"
                       class="btn btn-primary btn-sm"
-                      href="/edit/<%= element._id %>"
+                      href="/editProduct/<%= element._id %>"
                     >
                       <i class="bi bi-pencil"></i>
                     </a>

@@ -30,7 +30,7 @@
     <%- include('../components/dark-light.ejs') %>
 
     <main class="d-flex flex-nowrap">
-      <%- include('../components/sidebar.ejs',{ currentPage : "index" }) %>
+      <%- include('../components/sidebar.ejs',{ currentPage : "product" }) %>
 
       <div class="b-example-divider b-example-vr"></div>
 
@@ -40,12 +40,12 @@
 
         <nav class="px-2 mt-4 d-flex flex-wrap justify-content-between" aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><%= object.firstname %> <%= object.lastname %></li>
+            <li class="breadcrumb-item"><a href="/products">Product</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><%= obj.name %> </li>
           </ol>
 
 
-          <p class="me-md-5"> <span class="fw-medium fs-6">Id :</span> <%= object._id %></p>
+          <p class="me-md-5"> <span class="fw-medium fs-6">Id :</span> <%= obj._id %></p>
         </nav>
 
 
@@ -55,98 +55,63 @@
 
 
 
-        <form class="mx-0 row gx-3 gy-4 mt-2" action="/edit/<%= object._id %>?_method=PUT" method="post" onsubmit="return validateForm()">
+        <form class="mx-0 row gx-3 gy-4 mt-2" action="/editProduct/<%= obj._id %>?_method=PUT" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
           <div class="col-md-6">
-            <label for="inputfirstName4" class="form-label">First Name:</label>
+            <label for="inputName4" class="form-label">Name:</label>
             <input
-              value="<%= object.firstname %>"
+              value="<%= obj.name %>"
               type="text"
               class="form-control"
-              id="inputfirstName4"
-              name="firstname"
+              id="inputName4"
+              name="name"
               
             />
-            <small class="text-danger" id="firstNameError"></small>
+            <small class="text-danger" id="nameError"></small>
           </div>
 
           <div class="col-md-6">
-            <label for="inputlastName4" class="form-label">Last Name:</label>
+            <label for="inputdescription4" class="form-label">Description:</label>
             <input
-              value="<%= object.lastname %>"
+              value="<%= obj.description %>"
               type="text"
               class="form-control"
-              id="inputlastName4"
-              name="lastname"
+              id="inputdescription4"
+              name="description"
             />
-            <small class="text-danger" id="lastNameError"></small>
+            <small class="text-danger" id="descriptionError"></small>
           </div>
 
           <div class="col-md-6">
-            <label for="inputemail4" class="form-label">Email:</label>
+            <label for="inputprice4" class="form-label">Price:</label>
             <input
-              value="<%= object.email %>"
-              type="email"
+              value="<%= obj.price %>"
+              type="number"
               class="form-control"
-              id="inputemail4"
-              name="email"
+              id="inputprice4"
+              name="price"
             />
-            <small class="text-danger" id="emailError"></small>
+            <small class="text-danger" id="priceError"></small>
           </div>
 
           <div class="col-md-6">
-            <label for="inputtele4" class="form-label">Telephone:</label>
+            <label for="inputimage" class="form-label">Image:</label>
+          
+            <!-- Aperçu de l'image existante -->
+            <div class="mb-3">
+              <img src="<%= obj.imageUrl %>" alt="Product Image" class="img-thumbnail" width="150">
+            </div>
+            
+            <!-- Champ de fichier pour uploader une nouvelle image -->
             <input
-              value="<%= object.phone %>"
-              type="text"
+              type="file"
               class="form-control"
-              id="inputtele4"
-              name="phone"
+              id="inputimage"
+              name="imageUrl"
+              required
             />
-            <small class="text-danger" id="phoneError"></small>
+            <small class="text-danger" id="imageError"></small>
           </div>
-
-          <div>
-            <div class="col-md-6">
-              <label for="inputage4" class="form-label">Age:</label>
-              <input
-                value="<%= object.age %>"
-                type="number"
-                class="form-control"
-                id="inputage4"
-                name="age"
-              />
-              <small class="text-danger" id="ageError"></small>
-            </div>
-          </div>
-
-          <div>
-            <div class="col-md-6">
-              <label for="inputCountry" class="form-label">Country:</label>
-              <select id="inputCountry" class="form-select" name="country">
-                <option hidden disabled>choose here ...</option>
-
-                
-  
-                  <% var country_list = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Cape Verde","Cayman Islands","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cruise Ship","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kuwait","Kyrgyz Republic","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania","Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Namibia","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre &amp; Miquelon","Samoa","San Marino","Satellite","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","South Africa","South Korea","Spain","Sri Lanka","St Kitts &amp; Nevis","St Lucia","St Vincent","St. Lucia","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad &amp; Tobago","Tunisia","Turkey","Turkmenistan","Turks &amp; Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom","Uruguay","Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"]; %>
-                  <% country_list.forEach(item => { %>
-                    <option <%= item === object.country ? "selected" : null %> ><%= item %></option>
-                  <% }) %>
-              </select>
-              <small class="text-danger" id="countryError"></small>
-            </div>
-          </div>
-
-          <div>
-            <div class="col-md-6">
-              <label for="inputGender" class="form-label">Gender:</label>
-              <select id="inputGender" class="form-select" name="gender">
-                <option selected hidden disabled><%= object.gender %></option>
-                <option <%= "Male" === object.gender ? "selected" : null %>>Male</option>
-                <option <%= "Female" === object.gender ? "selected" : null %>>Female</option>
-              </select>
-              <small class="text-danger" id="genderError"></small>
-            </div>
-          </div>
+          
 
           <div class="col-12">
             <button type="submit" class="btn btn-primary">
@@ -158,7 +123,7 @@
               type="button"
               class="btn btn-danger"
             >
-              Delete Customer
+              Delete Product
             </button>
           </div>
         </form>
@@ -176,7 +141,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">
-                Delete Customer
+                Delete Product
               </h1>
               <button
                 type="button"
@@ -185,7 +150,7 @@
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body">Are you sure you want to continue delete the customer?</div>
+            <div class="modal-body">Are you sure you want to continue delete the product?</div>
             <div class="modal-footer">
               <button
                 type="button"
@@ -194,7 +159,7 @@
               >
                 Close
               </button>
-              <form action="/edit/<%= object._id %>?_method=DELETE" method="post">
+              <form action="/deleteProduct/<%= obj._id %>?_method=DELETE" method="post">
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
             </div>
@@ -203,7 +168,7 @@
       </div>
     </main>
     <script src="../js/bootstrap.bundle.min.js"></script>
-    <script src="../js/controleSaisieAdd.js"></script>
+    <script src="../js/controleSaiProd.js"></script>
     <script src="../js/sidebars.js"></script>
     <script src="../js/main.js"></script>
   </body>
